@@ -1,0 +1,134 @@
+//Define the data
+var data = {
+      "menu":[
+         {
+            "id":"contact",
+            "leaf":true,
+            "description":"Contact Us",
+            "link":"",
+            "content":"contactUs.html",
+            "cssClass":"static-content",
+            "menu":null
+         },
+         {
+            "id":"rules",
+            "leaf":false,
+            "description":"Sports Betting Rules",
+            "link":"",
+            "content":"",
+            "cssClass":"",
+            "menu":[
+               {
+                  "id":"types",
+                  "leaf":true,
+                  "description":"Wager Types",
+                  "link":"",
+                  "content":"wagerTypes.html",
+                  "cssClass":"static-content wager-types",
+                  "menu":null
+               },
+               {
+                  "id":"odds",
+                  "leaf":true,
+                  "description":"Odds & Lines",
+                  "link":"",
+                  "content":"oddsAndLines.html",
+                  "cssClass":"static-content",
+                  "menu":null
+               },
+               {
+                  "id":"policies",
+                  "leaf":true,
+                  "description":"Rules & Policies",
+                  "link":"",
+                  "content":"rulesAndPolicies.html",
+                  "cssClass":"static-content rules-policies",
+                  "menu":null
+               },
+               {
+                  "id":"bonuses",
+                  "leaf":true,
+                  "description":"Sports Bonuses",
+                  "link":"",
+                  "content":"sportsBonuses.html",
+                  "cssClass":"static-content",
+                  "menu":null
+               }
+            ]
+         },
+         {
+            "id":"conditions",
+            "leaf":false,
+            "description":"Terms & Conditions",
+            "link":"",
+            "content":"",
+            "cssClass":"",
+            "menu":[
+               {
+                  "id":"termsOfService",
+                  "leaf":true,
+                  "description":"Terms of Service",
+                  "link":"",
+                  "content":"termsOfService.html",
+                  "cssClass":"static-content",
+                  "menu":null
+               },
+               {
+                  "id":"privacy",
+                  "leaf":true,
+                  "description":"Privacy Policy",
+                  "link":"",
+                  "content":"privacy.html",
+                  "cssClass":"static-content",
+                  "menu":null
+               }
+            ]
+         },
+         {
+            "id":"view",
+            "leaf":true,
+            "description":"View in: Mobile | Full Site",
+            "link":"",
+            "content":"view.html",
+            "cssClass":"static-content",
+            "menu":null
+         }
+      ]
+   };
+
+//library implementation
+$(function() {
+
+    var listElement = function (itemData) {
+        var item = $("<li>")
+            .append(
+        $("<a>", {
+            click: function() {display(itemData.content);},
+            href: '#' + itemData.link,
+            html: itemData.description,
+            id: itemData.id,
+            class: itemData.cssClass
+        }));
+        if (itemData.leaf === false) {
+            var subList = $("<ul id=subList>");
+            $.each(itemData.menu, function () {
+                subList.append(listElement(this));
+            });
+            item.append(subList);
+        }
+        return item;
+    };
+    
+    var $menu = $("#menu");
+    $.each(data.menu, function () {
+        $menu.append(
+            listElement(this)
+        );
+    });
+
+    var display = function(content) {
+      $('#maincontent').text(content);
+    };
+
+});
+
